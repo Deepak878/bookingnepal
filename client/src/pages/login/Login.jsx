@@ -24,8 +24,15 @@ const Login = () => {
       console.log("okie");
       const res = await axios.post("/auth/login", credentials);
       console.log(res);
-      dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
-      navigate("/");
+      if (res.data.isAdmin) {
+        dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details });
+        navigate("/");
+      } else {
+        dispatch({
+          type: "LOGIN_FAILURE",
+          payload: { message: "You are not allowed" },
+        });
+      }
     } catch (error) {
       dispatch({ type: "LOGIN_FAILURE", payload: error.response.data });
     }
