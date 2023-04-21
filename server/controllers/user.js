@@ -1,4 +1,4 @@
-import User from "../models/Hotel.js";
+import User from "../models/User.js";
 
 //UPDATE
 export const updateUser = async (req, res, next) => {
@@ -26,7 +26,10 @@ export const deleteUser = async (req, res, next) => {
 export const getUser = async (req, res, next) => {
   console.log(req.params.id);
   try {
+    // const user = await User.findById(req.params.id);
     const user = await User.findById(req.params.id);
+
+    console.log(user);
     res.status(200).json(user);
   } catch (error) {
     res.status(500).json(err);
@@ -35,6 +38,7 @@ export const getUser = async (req, res, next) => {
 export const getUsers = async (req, res, next) => {
   try {
     const users = await User.find();
+    console.log(users);
     res.status(200).json(users);
   } catch (error) {
     next(error);
